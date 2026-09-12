@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: totto2727-org/setup-nix@main
+      - uses: totto2727-org/setup-typescript@main
+      - run: nix develop --command nix print-dev-env
+      - run: nix develop --command vp install --frozen-lockfile
+      - run: nix develop --command vp run ci

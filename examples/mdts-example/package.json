@@ -1,0 +1,8 @@
+{
+  "name": "mdts-example",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "mdts": "workspace:*"
+  }
+}
