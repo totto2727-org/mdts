@@ -2,7 +2,15 @@ import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
   fmt: {
+    arrowParens: 'always',
+    experimentalSortImports: {
+      ignoreCase: true,
+      newlinesBetween: true,
+      order: 'asc',
+    },
+    experimentalSortPackageJson: true,
     ignorePatterns: ['**/__fixtures__/**'],
+    jsxSingleQuote: true,
     printWidth: 120,
     proseWrap: 'preserve',
     semi: false,
