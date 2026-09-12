@@ -8,12 +8,9 @@ A consumer example is in [`examples/mdts-example`](examples/mdts-example/).
 
 ## Consumer setup
 
-Install `mdts` in a Vite+ project, enable `mdts/client` in TypeScript, and add an `mdts.config.ts` file.
+This extraction currently provides the source workspace only.
+For a future package release, consumers will enable `mdts/client` in TypeScript and add an `mdts.config.ts` file.
 The complete configuration, lint, build, preview, Comark, and Markdown authoring API reference is in the [mdts CLI guide](packages/mdts/README.md).
-
-```sh
-vp add mdts
-```
 
 ## Repository development
 
