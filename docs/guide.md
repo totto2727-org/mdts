@@ -4,7 +4,7 @@
 
 ## Configuration
 
-Install `mdts` as the only project dependency. It re-exports the Markdown authoring API from `vite-plugin-mdts` and the supported Comark preview plugins, while keeping their packages as internal runtime dependencies.
+The bundled workspace consumer declares `mdts` as its only project dependency. It re-exports the Markdown authoring API from `vite-plugin-mdts` and the supported Comark preview plugins, while keeping their packages as internal runtime dependencies.
 
 Enable typed `?link` imports through the mdts client types:
 
@@ -116,3 +116,53 @@ mdts preview
 ```
 
 `mdts build` executes every document module through Vite SSR and writes the resolved Markdown files to `output`. `mdts lint` runs Knip concurrently with the in-memory compilation pipeline, reports Knip, markdownlint, and textlint diagnostics, and exits unsuccessfully when any engine reports an error-severity diagnostic. `mdts preview` starts a Vite development server whose `index.html` lists every resolved Markdown document and renders the selected document with `@comark/html`. Documents use normal URL paths such as `/guide.md` and `/reference/api.md`, including direct navigation and browser history.
+
+## Public entry points
+
+- `mdts` exposes `defineConfig` and `loadMdtsConfig`, the Markdown authoring helpers below, the `markdown` Vite plugin and `markdownDocumentsId`, and their configuration and authoring types.
+- `mdts/client` enables typed `.md.ts?link` imports through `vite-plugin-mdts/client`.
+- `mdts/comark` exposes `createHtmlRenderer`, `renderHtml`, and `renderHtmlFromDocument`, plus `footnotes`, `math`/`Math`, `mermaid`/`Mermaid`, and `shiki` for configurable preview rendering.
+- `vite-plugin-mdts` exposes the same authoring helpers, the Vite integration, and lower-level `compileMarkdownDocuments`, `generatedFileNotice`, and `MarkdownCompileError` for tooling integrations.
+- `vite-plugin-mdts/client` supplies the plugin's link-import declarations directly.
+
+### Markdown authoring
+
+A document exports `meta` with a title and a default Markdown body.
+`defineMeta` validates metadata and freezes the resulting object; optional `frontmatter` accepts finite numbers, strings, booleans, null, arrays, and plain objects, but rejects circular values.
+`md` retains a template whose interpolations can contain strings, numbers, bigints, other templates, and deferred document links.
+
+Use a single note definition for a reference and its matching body:
+
+```ts
+import { defineMeta, defineNote, md, noteBody, noteRef } from 'mdts'
+
+const notes = defineNote([{ slug: 'origin', body: 'Generated from trusted TypeScript.' }])
+
+export const meta = defineMeta({ title: 'Release notes' })
+export default md`The release is ready.${noteRef(notes, 'origin')}
+
+${noteBody(notes, 'origin')}
+`
+```
+
+The generated document contains `# Release notes`, a `[^1]` reference, and its `[^1]: Generated from trusted TypeScript.` definition.
+`defineNote` assigns sequential string indexes and rejects duplicate slugs.
+`noteRef` and `noteBody` reject unknown slugs.
+The associated `MarkdownMetadata`, `MarkdownFrontmatterValue`, `MarkdownContent`, template/link types, and note types describe these values without requiring callers to construct internal template objects.
+
+For document links, import `./reference/api.md.ts?link` and interpolate that value into `md`.
+The link uses the target's metadata title and generated relative Markdown path.
+Optional `text` and `hash` query parameters override link text and its fragment.
+Documents are collected before links are resolved, so reciprocal links do not require cyclic module evaluation.
+
+### Lower-level Vite integration
+
+The `markdown({ directory })` plugin loads `.md.ts` modules and resolves link imports.
+`markdownDocumentsId` identifies its virtual document collection.
+Pass that collection to `compileMarkdownDocuments({ directory, modules, root })` to receive compiled documents with `fileName`, `source`, `sourcePath`, and `sourceMap` fields.
+`CompiledMarkdownDocument` and `MarkdownSourcePosition` describe that result.
+Invalid module exports, metadata, paths, or link targets fail compilation with `MarkdownCompileError`.
+`generatedFileNotice` is the emitted instruction to edit the original `.md.ts` rather than generated Markdown.
+The ordinary `mdts build` command performs this integration and writes the output for consumers.
+
+For the complete exported configuration/type declarations, see [mdts configuration](../packages/mdts/src/config.ts), [plugin exports](../packages/vite-plugin-mdts/src/index.ts), and [authoring types](../packages/vite-plugin-mdts/src/runtime.ts).

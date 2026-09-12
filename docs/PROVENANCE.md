@@ -9,6 +9,7 @@ The preserved tracked source paths are:
 - `js/app/mdts-example` → `examples/mdts-example`
 
 The extraction retains the source implementation, tests, fixtures, public exports, and user guide.
+The original `js/app/mdts/README.md` guide is preserved in `docs/guide.md`, with source-workspace wording and an additional public entry-point reference.
 The source paths did not contain a license file or package license declaration at the recorded commit.
 
 ## Source references
