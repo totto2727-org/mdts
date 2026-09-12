@@ -9,20 +9,34 @@
     };
   };
 
-  outputs = { nixpkgs, vite-plus-overlay, ... }:
+  outputs =
+    { nixpkgs, vite-plus-overlay, ... }:
     let
-      supportedSystems = [ "aarch64-darwin" "aarch64-linux" "x86_64-linux" ];
+      supportedSystems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
       forEachSystem = nixpkgs.lib.genAttrs supportedSystems;
-    in {
-      devShells = forEachSystem (system:
-        let pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ vite-plus-overlay.overlays.default ];
-        };
-        in {
-          default = pkgs.mkShell {
-            packages = [ pkgs.nodejs_24 pkgs.vite-plus pkgs.nixfmt ];
+    in
+    {
+      devShells = forEachSystem (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ vite-plus-overlay.overlays.default ];
           };
-        });
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              pkgs.nodejs_24
+              pkgs.vite-plus
+              pkgs.nixfmt
+            ];
+          };
+        }
+      );
     };
 }
