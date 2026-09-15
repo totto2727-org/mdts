@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "module": "NodeNext",
+    "noEmit": true,
+    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "types": ["@mdts/vite-plugin/client"]
+  },
+  "include": ["content/**/*.md.ts"]
+}
