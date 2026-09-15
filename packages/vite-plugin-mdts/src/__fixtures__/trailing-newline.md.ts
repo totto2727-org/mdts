@@ -1,4 +1,4 @@
-import { defineMeta, md } from 'vite-plugin-mdts'
+import { defineMeta, md } from '@mdts/vite-plugin'
 
 export const meta = defineMeta({ title: 'Trailing newline' })
 

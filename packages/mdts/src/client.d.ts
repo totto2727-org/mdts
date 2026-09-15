@@ -1,1 +1,1 @@
-/// <reference types="vite-plugin-mdts/client" />
+/// <reference types="@mdts/vite-plugin/client" />

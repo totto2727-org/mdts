@@ -6,7 +6,7 @@
     "noEmit": true,
     "moduleResolution": "NodeNext",
     "target": "ESNext",
-    "types": ["vite-plugin-mdts/client"]
+    "types": ["@mdts/vite-plugin/client"]
   },
   "include": ["content/**/*.md.ts"]
 }

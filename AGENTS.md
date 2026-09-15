@@ -5,8 +5,7 @@
 - `packages/mdts/` contains the public Node and Effect CLI and its integration tests.
 - `packages/vite-plugin-mdts/` contains the authoring API and Vite plugin.
 - `examples/mdts-example/` is a consumer that exercises public workspace packages only.
-- `docs/guide.md` owns the complete CLI and authoring guide preserved from the source repository.
-- `docs/PROVENANCE.md` records the extraction source.
+- `packages/mdts/README.md` owns the CLI usage and authoring reference.
 
 ## Development commands
 
@@ -45,7 +44,9 @@ vp install --frozen-lockfile
 - `vp run check` checks formatting, lint, and types.
 - `vp run test` runs standard Vitest discovery.
 - `vp run --filter mdts-example build` builds the Markdown consumer example.
-- `vp run ci` runs check, test, and build through the dependency graph.
+- `vp run pack` builds portable npm JavaScript and declaration files.
+- `vp run npm:check` checks publishable package contents after packing.
+- `vp run ci` runs check, test, example build, and npm packaging validation through the dependency graph.
 
 The retained baseline is 24 tests across the CLI integration and plugin suites.
 Preserve all fixtures and assertions, including the example's rendered Comark integrations.
@@ -57,7 +58,7 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 ### Public behavior
 
 - Keep the Node CLI entry point (`mdts`) and its Effect runtime. Do not substitute Bun or rewrite the rendering framework.
-- Preserve public subpaths: `mdts`, `mdts/client`, `mdts/comark`, `vite-plugin-mdts`, and `vite-plugin-mdts/client`.
+- Preserve public subpaths: `@mdts/cli`, `@mdts/cli/client`, `@mdts/cli/comark`, `@mdts/vite-plugin`, and `@mdts/vite-plugin/client`.
 - Markdown builds replace the configured output directory. Lint compiles in memory without writing or clearing it.
 - The CLI owns Vite root, document input, output, and internal plugins, and ignores external `vite.config.ts` discovery.
 
@@ -69,13 +70,25 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 
 ## Package-specific rules
 
+- Bundle the pinned Effect platform implementation in the CLI to avoid its transitive prerelease range resolving an incompatible runtime outside this workspace. Keep its license in `packages/mdts/THIRD_PARTY_NOTICES.md`.
 - Keep Effect and its platform packages compatible with the pinned `4.0.0-beta.65` runtime. Do not inherit an unrelated framework's Effect upgrade.
 - Keep shared dependency versions in the workspace catalog and preserve the plugin's internal runtime dependencies.
-- Keep all packages private. Do not publish, add registry acquisition claims, or invent a license without an explicit owner decision.
+- Publish `@mdts/cli` and `@mdts/vite-plugin` with public access. Keep the workspace root and example private. Ship built JavaScript and declaration files, not executable TypeScript in node_modules. Licensing remains unspecified until an explicit owner decision.
+
+## npm publication
+
+- The public packages are `@mdts/vite-plugin` and `@mdts/cli`. The command remains `mdts`.
+- Keep both packages at the same release version. The CLI workspace dependency is converted to that version in the tarball.
+- Run `vp run --no-cache ci` before publishing. `npm:check` creates both real tarballs in ignored `tmp/npm-check/`, including each package README and built declarations.
+- Use `vp pm pack` or `vp pm publish`, not raw `npm pack` on source manifests. The package manager resolves workspace/catalog dependencies and applies `publishConfig` exports and the CLI bin override.
+- Verify an installed tarball consumer, not just workspace links. Check build output, lint exit status, preview routes, and client type resolution without the workspace's Effect override.
+- Authentication and ownership of the npm `@mdts` scope must be supplied by the owner. Never reset credentials or commit registry tokens.
+- From a clean, validated release commit on `main`, publish in dependency order with `vp pm publish --recursive --filter @mdts/vite-plugin --filter @mdts/cli --publish-branch main`. Package metadata explicitly targets `https://registry.npmjs.org/` with public access.
+- Verify both published versions before claiming installation from npm works. Documentation installation examples describe the release interface, not proof that the first release has completed.
+- Nix remains a development shell only. Native compilation and `package.nix` are intentionally excluded because Vite's native bindings did not work with a direct Bun standalone build.
 
 ## Task-specific documentation
 
-- When changing user-visible configuration or behavior: [CLI and authoring guide](docs/guide.md).
-- When checking extraction history or source attribution: [source provenance](docs/PROVENANCE.md).
+- When changing user-visible configuration or behavior: [CLI and authoring guide](packages/mdts/README.md).
 
 _This AGENTS.md was generated from the [share-artifact skill](https://raw.githubusercontent.com/totto2727-org/agent/refs/heads/main/plugins/totto2727-coding/skills/share-artifact/SKILL.md) and [AGENTS template](https://raw.githubusercontent.com/totto2727-org/agent/refs/heads/main/plugins/totto2727-coding/skills/share-artifact/agents/template.md)._

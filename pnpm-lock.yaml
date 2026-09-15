@@ -140,7 +140,7 @@ importers:
 
   examples/mdts-example:
     devDependencies:
-      mdts:
+      '@mdts/cli':
         specifier: workspace:*
         version: link:../../packages/mdts
 
@@ -149,9 +149,9 @@ importers:
       '@comark/html':
         specifier: 0.6.2
         version: 0.6.2(beautiful-mermaid@1.1.3)(katex@0.17.0)(shiki@4.4.3)
-      '@effect/platform-node':
-        specifier: 4.0.0-beta.65
-        version: 4.0.0-beta.65(effect@4.0.0-beta.65)(ioredis@5.11.1)
+      '@mdts/vite-plugin':
+        specifier: workspace:*
+        version: link:../vite-plugin-mdts
       '@textlint/kernel':
         specifier: 15.8.0
         version: 15.8.0
@@ -194,13 +194,13 @@ importers:
       vite:
         specifier: npm:@voidzero-dev/vite-plus-core@0.2.8
         version: '@voidzero-dev/vite-plus-core@0.2.8(@types/node@25.9.5)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0)'
-      vite-plugin-mdts:
-        specifier: workspace:*
-        version: link:../vite-plugin-mdts
       vite-plus:
         specifier: 'catalog:'
         version: 0.2.8(@types/node@25.9.5)(@voidzero-dev/vite-plus-core@0.2.8(@types/node@25.9.5)(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0))(jiti@2.7.0)(typescript@5.9.3)(yaml@2.9.0)
     devDependencies:
+      '@effect/platform-node':
+        specifier: 4.0.0-beta.65
+        version: 4.0.0-beta.65(effect@4.0.0-beta.65)(ioredis@5.11.1)
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.5

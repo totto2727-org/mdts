@@ -1,6 +1,6 @@
 import markdownPlugin from '@textlint/textlint-plugin-markdown'
-import { defineConfig } from 'mdts'
-import type { TextlintRuleModule } from 'mdts'
+import { defineConfig } from '@mdts/cli'
+import type { TextlintRuleModule } from '@mdts/cli'
 
 const forbiddenWordRule: TextlintRuleModule<{ readonly word?: string }> = (context, options) => {
   const word = options?.word ?? 'forbidden'

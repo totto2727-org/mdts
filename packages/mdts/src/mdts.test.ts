@@ -1,9 +1,9 @@
 import { access, readFile, readdir, rm } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
+import { createHtmlRenderer } from '@mdts/cli/comark'
 import { Effect, Predicate } from 'effect'
 import { FetchHttpClient, HttpClient } from 'effect/unstable/http'
-import { createHtmlRenderer } from 'mdts/comark'
 import { afterEach, beforeEach, describe, expect, test } from 'vite-plus/test'
 
 import { buildMarkdown, compileResolvedMarkdownDocuments } from './build.ts'

@@ -1,5 +1,5 @@
-import { defineNote, md, noteBody, noteRef } from 'mdts'
-import type { MarkdownMetadata } from 'mdts'
+import { defineNote, md, noteBody, noteRef } from '@mdts/cli'
+import type { MarkdownMetadata } from '@mdts/cli'
 
 const notes = defineNote([
   {

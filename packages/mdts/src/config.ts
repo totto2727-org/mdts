@@ -15,7 +15,7 @@ import type {
 import { loadConfigFromFile, normalizePath } from 'vite-plus'
 import type { ConfigEnv, UserConfig } from 'vite-plus'
 
-export { defineMeta, defineNote, markdown, markdownDocumentsId, md, noteBody, noteRef } from 'vite-plugin-mdts'
+export { defineMeta, defineNote, markdown, markdownDocumentsId, md, noteBody, noteRef } from '@mdts/vite-plugin'
 export type {
   TextlintFilterRuleReporter,
   TextlintKernelFilterRule,
@@ -41,7 +41,7 @@ export type {
   MarkdownPluginOptions,
   MarkdownTemplate,
   MarkdownTemplateValue,
-} from 'vite-plugin-mdts'
+} from '@mdts/vite-plugin'
 
 const defaultConfigFile = 'mdts.config.ts'
 const defaultInput = 'content'

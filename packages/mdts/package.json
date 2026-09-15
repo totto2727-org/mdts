@@ -1,19 +1,46 @@
 {
-  "name": "mdts",
+  "name": "@mdts/cli",
   "version": "0.0.0",
-  "private": true,
+  "description": "TypeScript Markdown CLI and authoring API",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/totto2727-org/mdts.git",
+    "directory": "packages/mdts"
+  },
   "bin": {
     "mdts": "./src/cli.ts"
   },
+  "files": [
+    "dist",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/config.ts",
     "./client": "./src/client.d.ts",
     "./comark": "./src/comark.ts"
   },
+  "publishConfig": {
+    "bin": {
+      "mdts": "./dist/cli.mjs"
+    },
+    "exports": {
+      ".": {
+        "types": "./dist/config.d.mts",
+        "import": "./dist/config.mjs"
+      },
+      "./client": "./dist/client.d.ts",
+      "./comark": {
+        "types": "./dist/comark.d.mts",
+        "import": "./dist/comark.mjs"
+      }
+    },
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "@comark/html": "0.6.2",
-    "@effect/platform-node": "4.0.0-beta.65",
+    "@mdts/vite-plugin": "workspace:*",
     "@textlint/kernel": "15.8.0",
     "@textlint/module-interop": "15.8.0",
     "@textlint/textlint-plugin-markdown": "15.8.0",
@@ -28,10 +55,13 @@
     "textlint": "15.8.0",
     "textlint-rule-preset-ja-technical-writing": "12.0.2",
     "vite": "catalog:",
-    "vite-plugin-mdts": "workspace:*",
     "vite-plus": "catalog:"
   },
   "devDependencies": {
+    "@effect/platform-node": "4.0.0-beta.65",
     "@types/node": "catalog:"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

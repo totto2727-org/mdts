@@ -1,4 +1,4 @@
-import { md } from 'mdts'
+import { md } from '@mdts/cli'
 
 export const meta = {
   title: 'English preset',

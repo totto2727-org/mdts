@@ -1,5 +1,5 @@
-import { defineConfig } from 'mdts'
-import { footnotes } from 'mdts/comark'
+import { defineConfig } from '@mdts/cli'
+import { footnotes } from '@mdts/cli/comark'
 
 export default defineConfig({
   input: './content',
