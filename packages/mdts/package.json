@@ -1,6 +1,6 @@
 {
   "name": "@mdts/cli",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "TypeScript Markdown CLI and authoring API",
   "repository": {
     "type": "git",
@@ -8,7 +8,7 @@
     "directory": "packages/mdts"
   },
   "bin": {
-    "mdts": "./src/cli.ts"
+    "mdts": "./dist/cli.mjs"
   },
   "files": [
     "dist",
@@ -16,27 +16,20 @@
   ],
   "type": "module",
   "exports": {
-    ".": "./src/config.ts",
-    "./client": "./src/client.d.ts",
-    "./comark": "./src/comark.ts"
+    ".": {
+      "types": "./dist/config.d.mts",
+      "import": "./dist/config.mjs"
+    },
+    "./client": "./dist/client.d.ts",
+    "./comark": {
+      "types": "./dist/comark.d.mts",
+      "import": "./dist/comark.mjs"
+    }
   },
   "publishConfig": {
-    "bin": {
-      "mdts": "./dist/cli.mjs"
-    },
-    "exports": {
-      ".": {
-        "types": "./dist/config.d.mts",
-        "import": "./dist/config.mjs"
-      },
-      "./client": "./dist/client.d.ts",
-      "./comark": {
-        "types": "./dist/comark.d.mts",
-        "import": "./dist/comark.mjs"
-      }
-    },
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
   },
   "dependencies": {
     "@comark/html": "0.6.2",

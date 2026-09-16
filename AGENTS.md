@@ -44,9 +44,11 @@ vp install --frozen-lockfile
 - `vp run check` checks formatting, lint, and types.
 - `vp run test` runs standard Vitest discovery.
 - `vp run --filter mdts-example build` builds the Markdown consumer example.
-- `vp run pack` builds portable npm JavaScript and declaration files.
+- `vp run w:pack` runs package-local `pack` tasks in workspace dependency order to build portable npm JavaScript and declaration files.
 - `vp run npm:check` checks publishable package contents after packing.
 - `vp run ci` runs check, test, example build, and npm packaging validation through the dependency graph.
+
+Checks, fixes, tests, and example builds depend on `w:pack` so workspace consumers use the same `dist/` exports and CLI entry point as npm consumers.
 
 The retained baseline is 24 tests across the CLI integration and plugin suites.
 Preserve all fixtures and assertions, including the example's rendered Comark integrations.
@@ -77,15 +79,18 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 
 ## npm publication
 
-- The public packages are `@mdts/vite-plugin` and `@mdts/cli`. The command remains `mdts`.
-- Keep both packages at the same release version. The CLI workspace dependency is converted to that version in the tarball.
-- Run `vp run --no-cache ci` before publishing. `npm:check` creates both real tarballs in ignored `tmp/npm-check/`, including each package README and built declarations.
-- Use `vp pm pack` or `vp pm publish`, not raw `npm pack` on source manifests. The package manager resolves workspace/catalog dependencies and applies `publishConfig` exports and the CLI bin override.
-- Verify an installed tarball consumer, not just workspace links. Check build output, lint exit status, preview routes, and client type resolution without the workspace's Effect override.
-- Authentication and ownership of the npm `@mdts` scope must be supplied by the owner. Never reset credentials or commit registry tokens.
-- From a clean, validated release commit on `main`, publish in dependency order with `vp pm publish --recursive --filter @mdts/vite-plugin --filter @mdts/cli --publish-branch main`. Package metadata explicitly targets `https://registry.npmjs.org/` with public access.
-- Verify both published versions before claiming installation from npm works. Documentation installation examples describe the release interface, not proof that the first release has completed.
-- Nix remains a development shell only. Native compilation and `package.nix` are intentionally excluded because Vite's native bindings did not work with a direct Bun standalone build.
+- `.github/workflows/publish.yml` publishes on pushes to `main`, including merged pull requests, using the shared Nix, TypeScript setup, and `publish-npm` actions on `@main`, matching effront.
+- Publication is serialized, guarded to `totto2727-org/mdts`, and restricted to `@mdts/vite-plugin` and `@mdts/cli`. The root and example stay private. The command remains `mdts`.
+- The workflow runs `vp run w:pack`, then the shared action with both package filters. The action runs filtered `vp pm publish -r --provenance`, resolves workspace/catalog dependencies, and skips versions already on npm. Do not stage or extract tarballs in the build or publish workflow.
+- Public manifests point directly at `dist/` for exports and the CLI executable. Local consumers and npm users resolve the same entry points.
+- Both packages start at stable version `0.1.0`, with public access, the npm registry, and the `latest` dist-tag. Keep them at the same release version and bump changed releases explicitly in the PR. There is no automatic version bump or tag trigger.
+- Run `vp run --no-cache ci` before merging. The separate `npm:check` validation task creates inspectable tarballs under ignored `tmp/npm-check/`; publication does not use those artifacts.
+- Verify installed tarball consumers, including build output, lint exit status, preview routes, and client type resolution without the workspace's Effect override.
+- Before merging the publishing workflow, the owner must ensure both npm packages exist and configure each Trusted Publisher for GitHub owner `totto2727-org`, repository `mdts`, workflow `publish.yml`, and direct publication. No GitHub environment is configured. The owner performs initial publication if npm requires it.
+- Use GitHub-hosted runners and job-scoped `id-token: write`, without long-lived npm tokens. Protect `main` and require the CI check before merging. Local checks and dry runs do not verify registry trust or scope ownership.
+- Verify both published versions before claiming npm publication is complete. Do not change authentication settings or dispatch publication as part of local verification.
+- Nix remains a development shell only. Native compilation and `package.nix` remain outside scope.
+- References: [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/) and [pnpm publish](https://pnpm.io/cli/publish).
 
 ## Task-specific documentation
 

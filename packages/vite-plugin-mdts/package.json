@@ -1,6 +1,6 @@
 {
   "name": "@mdts/vite-plugin",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Vite plugin for TypeScript Markdown documents",
   "repository": {
     "type": "git",
@@ -12,19 +12,16 @@
   ],
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./client": "./src/client.d.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./client": "./dist/client.d.ts"
   },
   "publishConfig": {
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.mts",
-        "import": "./dist/index.mjs"
-      },
-      "./client": "./dist/client.d.ts"
-    },
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
   },
   "dependencies": {
     "confbox": "0.2.4",
