@@ -33,5 +33,5 @@ jobs:
         with:
           working-directory: .
           filters: |
-            @mdts/vite-plugin
+            @mdts/vite
             @mdts/cli

@@ -1,5 +1,5 @@
-import { defineMeta, defineNote, md, noteBody, noteRef } from '@mdts/vite-plugin'
-import type { MarkdownLinkReference, MarkdownTemplate } from '@mdts/vite-plugin'
+import { defineMeta, defineNote, md, noteBody, noteRef } from '@mdts/vite'
+import type { MarkdownLinkReference, MarkdownTemplate } from '@mdts/vite'
 import reference from './reference/api.md.ts?text=Details&hash=api&link'
 
 const notes = defineNote([

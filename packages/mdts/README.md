@@ -88,7 +88,7 @@ The reference below covers CLI configuration, authoring, and preview integration
 
 ### Configuration
 
-Install `@mdts/cli` as a development dependency in your project. It re-exports the Markdown authoring API from `@mdts/vite-plugin` and the supported Comark preview plugins, while keeping their packages as internal runtime dependencies.
+Install `@mdts/cli` as a development dependency in your project. It re-exports the Markdown authoring API from `@mdts/vite` and the supported Comark preview plugins, while keeping their packages as internal runtime dependencies.
 
 Enable typed `?link` imports through the mdts client types:
 
@@ -204,10 +204,10 @@ mdts preview
 ### Public entry points
 
 - `@mdts/cli` exposes `defineConfig` and `loadMdtsConfig`, the Markdown authoring helpers below, the `markdown` Vite plugin and `markdownDocumentsId`, and their configuration and authoring types.
-- `@mdts/cli/client` enables typed `.md.ts?link` imports through `@mdts/vite-plugin/client`.
+- `@mdts/cli/client` enables typed `.md.ts?link` imports through `@mdts/vite/client`.
 - `@mdts/cli/comark` exposes `createHtmlRenderer`, `renderHtml`, and `renderHtmlFromDocument`, plus `footnotes`, `math`/`Math`, `mermaid`/`Mermaid`, and `shiki` for configurable preview rendering.
-- `@mdts/vite-plugin` exposes the same authoring helpers, the Vite integration, and lower-level `compileMarkdownDocuments`, `generatedFileNotice`, and `MarkdownCompileError` for tooling integrations.
-- `@mdts/vite-plugin/client` supplies the plugin's link-import declarations directly.
+- `@mdts/vite` exposes the same authoring helpers, the Vite integration, and lower-level `compileMarkdownDocuments`, `generatedFileNotice`, and `MarkdownCompileError` for tooling integrations.
+- `@mdts/vite/client` supplies the plugin's link-import declarations directly.
 
 ### Markdown authoring
 

@@ -1,10 +1,6 @@
 import { NodeServices } from '@effect/platform-node'
-import {
-  compileMarkdownDocuments as compileLoadedMarkdownDocuments,
-  markdown,
-  markdownDocumentsId,
-} from '@mdts/vite-plugin'
-import type { CompiledMarkdownDocument } from '@mdts/vite-plugin'
+import { compileMarkdownDocuments as compileLoadedMarkdownDocuments, markdown, markdownDocumentsId } from '@mdts/vite'
+import type { CompiledMarkdownDocument } from '@mdts/vite'
 import { Effect, FileSystem } from 'effect'
 import { createServer, mergeConfig, normalizePath } from 'vite-plus'
 import type { InlineConfig, ViteDevServer } from 'vite-plus'

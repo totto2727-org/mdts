@@ -1,5 +1,5 @@
-import { generatedFileNotice } from '@mdts/vite-plugin'
-import type { CompiledMarkdownDocument } from '@mdts/vite-plugin'
+import { generatedFileNotice } from '@mdts/vite'
+import type { CompiledMarkdownDocument } from '@mdts/vite'
 import { TextlintKernelDescriptor } from '@textlint/kernel'
 import type { TextlintKernelRule } from '@textlint/kernel'
 import { moduleInterop } from '@textlint/module-interop'

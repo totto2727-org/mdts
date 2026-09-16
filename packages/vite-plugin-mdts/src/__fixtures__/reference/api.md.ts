@@ -1,4 +1,4 @@
-import { defineMeta, md } from '@mdts/vite-plugin'
+import { defineMeta, md } from '@mdts/vite'
 
 import guide from '../guide.md.ts?link'
 

@@ -149,7 +149,7 @@ importers:
       '@comark/html':
         specifier: 0.6.2
         version: 0.6.2(beautiful-mermaid@1.1.3)(katex@0.17.0)(shiki@4.4.3)
-      '@mdts/vite-plugin':
+      '@mdts/vite':
         specifier: workspace:*
         version: link:../vite-plugin-mdts
       '@textlint/kernel':

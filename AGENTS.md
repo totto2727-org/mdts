@@ -60,7 +60,7 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 ### Public behavior
 
 - Keep the Node CLI entry point (`mdts`) and its Effect runtime. Do not substitute Bun or rewrite the rendering framework.
-- Preserve public subpaths: `@mdts/cli`, `@mdts/cli/client`, `@mdts/cli/comark`, `@mdts/vite-plugin`, and `@mdts/vite-plugin/client`.
+- Preserve public subpaths: `@mdts/cli`, `@mdts/cli/client`, `@mdts/cli/comark`, `@mdts/vite`, and `@mdts/vite/client`.
 - Markdown builds replace the configured output directory. Lint compiles in memory without writing or clearing it.
 - The CLI owns Vite root, document input, output, and internal plugins, and ignores external `vite.config.ts` discovery.
 
@@ -75,12 +75,12 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 - Bundle the pinned Effect platform implementation in the CLI to avoid its transitive prerelease range resolving an incompatible runtime outside this workspace. Keep its license in `packages/mdts/THIRD_PARTY_NOTICES.md`.
 - Keep Effect and its platform packages compatible with the pinned `4.0.0-beta.65` runtime. Do not inherit an unrelated framework's Effect upgrade.
 - Keep shared dependency versions in the workspace catalog and preserve the plugin's internal runtime dependencies.
-- Publish `@mdts/cli` and `@mdts/vite-plugin` with public access. Keep the workspace root and example private. Ship built JavaScript and declaration files, not executable TypeScript in node_modules. Licensing remains unspecified until an explicit owner decision.
+- Publish `@mdts/cli` and `@mdts/vite` with public access. Keep the workspace root and example private. Ship built JavaScript and declaration files, not executable TypeScript in node_modules. Licensing remains unspecified until an explicit owner decision.
 
 ## npm publication
 
 - `.github/workflows/publish.yml` publishes on pushes to `main`, including merged pull requests, using the shared Nix, TypeScript setup, and `publish-npm` actions on `@main`, matching effront.
-- Publication is serialized, guarded to `totto2727-org/mdts`, and restricted to `@mdts/vite-plugin` and `@mdts/cli`. The root and example stay private. The command remains `mdts`.
+- Publication is serialized, guarded to `totto2727-org/mdts`, and restricted to `@mdts/vite` and `@mdts/cli`. The root and example stay private. The command remains `mdts`.
 - The workflow runs `vp run w:pack`, then the shared action with both package filters. The action runs filtered `vp pm publish -r --provenance`, resolves workspace/catalog dependencies, and skips versions already on npm. Do not stage or extract tarballs in the build or publish workflow.
 - Public manifests point directly at `dist/` for exports and the CLI executable. Local consumers and npm users resolve the same entry points.
 - Both packages start at stable version `0.1.0`, with public access, the npm registry, and the `latest` dist-tag. Keep them at the same release version and bump changed releases explicitly in the PR. There is no automatic version bump or tag trigger.
