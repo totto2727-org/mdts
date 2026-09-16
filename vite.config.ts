@@ -22,14 +22,16 @@ export default defineConfig({
   },
   run: {
     tasks: {
-      check: { command: '', dependsOn: ['js:check'] },
-      ci: { command: '', dependsOn: ['check', 'test', 'build'] },
-      fix: { command: '', dependsOn: ['js:fix'] },
-      test: { command: '', dependsOn: ['js:test'] },
-      'js:check': { command: 'vp check' },
-      'js:fix': { command: 'vp check --fix' },
-      'js:test': { command: 'vp test run' },
-      build: { command: 'vp run -r build' },
+      check: { command: 'vp check', dependsOn: ['w:pack'] },
+      ci: { command: '', dependsOn: ['check', 'test', 'build', 'npm:check'] },
+      fix: { command: 'vp check --fix', dependsOn: ['w:pack'] },
+      test: { command: 'vp test run', dependsOn: ['w:pack'] },
+      build: { command: 'vp run --filter mdts-example build', dependsOn: ['w:pack'] },
+      'w:pack': { command: 'vp run -r pack' },
+      'npm:check': {
+        command: 'vp pm pack --filter @mdts/cli --filter @mdts/vite --pack-destination tmp/npm-check',
+        dependsOn: ['w:pack'],
+      },
     },
   },
 })

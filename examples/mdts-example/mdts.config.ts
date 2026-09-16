@@ -1,5 +1,5 @@
-import { defineConfig } from 'mdts'
-import { footnotes, math, Math, mermaid, Mermaid, shiki } from 'mdts/comark'
+import { defineConfig } from '@mdts/cli'
+import { footnotes, math, Math, mermaid, Mermaid, shiki } from '@mdts/cli/comark'
 
 export default defineConfig({
   input: './content',
