@@ -29,7 +29,8 @@ export default defineConfig({
       build: { command: 'vp run --filter mdts-example build', dependsOn: ['w:pack'] },
       'w:pack': { command: 'vp run -r pack' },
       'npm:check': {
-        command: 'vp pm pack --filter @mdts/cli --filter @mdts/vite --pack-destination tmp/npm-check',
+        command:
+          'vp pm pack --filter @mdts/cli --filter @mdts/core --filter @mdts/vite --pack-destination tmp/npm-check',
         dependsOn: ['w:pack'],
       },
     },

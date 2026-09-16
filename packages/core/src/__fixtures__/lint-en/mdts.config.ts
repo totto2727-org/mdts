@@ -1,4 +1,4 @@
-import { defineConfig } from '@mdts/cli'
+import { defineConfig } from '@mdts/core'
 
 export default defineConfig({
   input: './content',

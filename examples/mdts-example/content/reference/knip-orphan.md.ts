@@ -1,4 +1,4 @@
-import { md } from '@mdts/cli'
+import { md } from '@mdts/core'
 
 export const meta = { title: 'Knip orphan validation' }
 

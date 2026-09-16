@@ -1,15 +1,14 @@
-import { access, readFile, readdir, rm } from 'node:fs/promises'
+import { access, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
-import { createHtmlRenderer } from '@mdts/cli/comark'
+import { loadMdtsConfig } from '@mdts/core'
+import { buildMarkdown, compileMarkdownDocuments, compileResolvedMarkdownDocuments } from '@mdts/core/build'
+import { createHtmlRenderer } from '@mdts/core/comark'
+import { lintMarkdown } from '@mdts/core/lint'
+import { createMarkdownPreview } from '@mdts/core/preview'
 import { Effect, Predicate } from 'effect'
 import { FetchHttpClient, HttpClient } from 'effect/unstable/http'
 import { afterEach, beforeEach, describe, expect, test } from 'vite-plus/test'
-
-import { buildMarkdown, compileResolvedMarkdownDocuments } from './build.ts'
-import { loadMdtsConfig } from './config.ts'
-import { formatLintResult, lintMarkdown } from './lint.ts'
-import { createMarkdownPreview } from './preview.ts'
 
 const projectRoot = fileURLToPath(new URL('__fixtures__/basic/', import.meta.url))
 const englishLintProjectRoot = fileURLToPath(new URL('__fixtures__/lint-en/', import.meta.url))
@@ -55,6 +54,40 @@ describe('mdts', () => {
       markdownlint: { scope: 'file', target: 'source' },
       textlint: { scope: 'file', target: 'source' },
     })
+  })
+
+  test('compiles documents in memory without replacing existing output', async () => {
+    // Given
+    await mkdir(outputDirectory, { recursive: true })
+    await writeFile(`${outputDirectory}/keep.txt`, 'existing output', 'utf-8')
+
+    // When
+    const documents = await compileMarkdownDocuments({ root: projectRoot })
+
+    // Then
+    expect(documents.map((document) => document.fileName).toSorted()).toEqual([
+      'guide.md',
+      'plugins.md',
+      'reference/api.md',
+    ])
+    expect(await readdir(outputDirectory)).toEqual(['keep.txt'])
+    expect(await readFile(`${outputDirectory}/keep.txt`, 'utf-8')).toBe('existing output')
+  })
+
+  test('returns lint errors without replacing existing output or setting process status', async () => {
+    // Given
+    await mkdir(lintOutputDirectory, { recursive: true })
+    await writeFile(`${lintOutputDirectory}/keep.txt`, 'existing output', 'utf-8')
+    const exitCode = process.exitCode
+
+    // When
+    const result = await lintMarkdown({ root: lintProjectRoot })
+
+    // Then
+    expect(result.errorCount).toBe(2)
+    expect(await readdir(lintOutputDirectory)).toEqual(['keep.txt'])
+    expect(await readFile(`${lintOutputDirectory}/keep.txt`, 'utf-8')).toBe('existing output')
+    expect(process.exitCode).toBe(exitCode)
   })
 
   test('builds Markdown assets without loading vite.config.ts', async () => {
@@ -106,8 +139,6 @@ describe('mdts', () => {
         target: 'source',
       },
     ])
-    expect(formatLintResult(result)).toContain('content/lint-target.md.ts:7:')
-    expect(formatLintResult(result)).toContain('(markdownlint/MD013)')
     await expect(access(lintOutputDirectory)).rejects.toThrow()
   })
 
@@ -132,9 +163,6 @@ describe('mdts', () => {
       ],
       errorCount: 1,
     })
-    expect(formatLintResult(result)).toBe(
-      'content/nested/orphan.md.ts:1:1 error Markdown source file is not reachable from an entry document (knip/files)',
-    )
     await expect(access(knipLintOutputDirectory)).rejects.toThrow()
   })
 
@@ -314,7 +342,7 @@ describe('mdts', () => {
     }
   })
 
-  test('renders every included Comark integration with only mdts installed', async () => {
+  test('renders every included Comark integration with the public core package', async () => {
     // Given
     const server = await createMarkdownPreview({ root: exampleRoot })
 

@@ -5,7 +5,7 @@ import type { Plugin, ViteDevServer } from 'vite-plus'
 
 import { compileResolvedMarkdownDocuments, resolveMdtsViteConfig } from './build.ts'
 import { loadMdtsConfig } from './config.ts'
-import type { MdtsComarkOptions, ResolvedMdtsConfig } from './config.ts'
+import type { MdtsComarkOptions, MdtsProjectOptions, ResolvedMdtsConfig } from './config.ts'
 
 const documentsEndpoint = '/__mdts/documents'
 const previewClientId = '/@mdts/client'
@@ -17,31 +17,24 @@ const packageStylesheetUrl = (specifier: string): string => {
   )
   return `/@fs/${path}`
 }
-const githubMarkdownStylesheet = packageStylesheetUrl('github-markdown-css/github-markdown.css')
-const katexStylesheet = packageStylesheetUrl('katex/dist/katex.min.css')
 const alertTypes = ['caution', 'important', 'note', 'tip', 'warning'] as const
 const AlertType = Schema.Literals(alertTypes)
 const isAlertType = Schema.is(AlertType)
-
-interface MdtsPreviewOptions {
-  readonly configFile?: string
-  readonly root: string
-}
 
 interface PreviewDocument {
   readonly fileName: string
   readonly html: string
 }
 
-const indexHtml = `<!doctype html>
+const createIndexHtml = (): string => `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="${githubMarkdownStylesheet}" />
-    <link rel="stylesheet" href="${katexStylesheet}" />
+    <link rel="stylesheet" href="${packageStylesheetUrl('github-markdown-css/github-markdown.css')}" />
+    <link rel="stylesheet" href="${packageStylesheetUrl('katex/dist/katex.min.css')}" />
     <title>mdts preview</title>
     <style>
       :root { font-family: ui-sans-serif, system-ui, sans-serif; color: #18212f; background: #f6f7f9; }
@@ -184,6 +177,7 @@ const githubAlertComponent: NonNullable<MdtsComarkOptions['components']>[string]
 }
 
 const previewPlugin = (config: ResolvedMdtsConfig): Plugin => {
+  const indexHtml = createIndexHtml()
   const renderHtml = createHtmlRenderer({
     ...config.preview.comark,
     components: {
@@ -253,7 +247,7 @@ const previewPlugin = (config: ResolvedMdtsConfig): Plugin => {
   }
 }
 
-export const createMarkdownPreview = async (options: MdtsPreviewOptions): Promise<ViteDevServer> => {
+export const createMarkdownPreview = async (options: MdtsProjectOptions): Promise<ViteDevServer> => {
   const config = await loadMdtsConfig({ command: 'serve', ...options })
   return await createServer(
     resolveMdtsViteConfig(config, {

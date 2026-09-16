@@ -13,17 +13,13 @@ import { normalizePath } from 'vite-plus'
 import { compileResolvedMarkdownDocuments } from './build.ts'
 import { loadMdtsConfig } from './config.ts'
 import type {
+  MdtsProjectOptions,
   MdtsLintScope,
   MdtsLintTarget,
   MdtsTextlintPreset,
   MdtsTextlintRulePreset,
   ResolvedMdtsConfig,
 } from './config.ts'
-
-interface MdtsLintOptions {
-  readonly configFile?: string
-  readonly root: string
-}
 
 export type MdtsLintEngine = 'knip' | 'markdownlint' | 'textlint'
 export type MdtsLintSeverity = 'error' | 'info' | 'warning'
@@ -277,7 +273,7 @@ const compareDiagnostics = (left: MdtsLintDiagnostic, right: MdtsLintDiagnostic)
   left.engine.localeCompare(right.engine) ||
   left.ruleId.localeCompare(right.ruleId)
 
-export const lintMarkdown = async (options: MdtsLintOptions): Promise<MdtsLintResult> => {
+export const lintMarkdown = async (options: MdtsProjectOptions): Promise<MdtsLintResult> => {
   const config = await loadMdtsConfig({ command: 'build', ...options })
   const { textlint } = config.lint
   const builtInTextlintPresetPromise: Promise<MdtsTextlintRulePreset | null> =
@@ -300,11 +296,3 @@ export const lintMarkdown = async (options: MdtsLintOptions): Promise<MdtsLintRe
     errorCount: diagnostics.filter((diagnostic) => diagnostic.severity === 'error').length,
   }
 }
-
-export const formatLintResult = (result: MdtsLintResult): string =>
-  result.diagnostics
-    .map(
-      (diagnostic) =>
-        `${diagnostic.filePath}:${diagnostic.line}:${diagnostic.column} ${diagnostic.severity} ${diagnostic.message} (${diagnostic.engine}/${diagnostic.ruleId})`,
-    )
-    .join('\n')

@@ -1,4 +1,4 @@
-import { md } from '@mdts/cli'
+import { md } from '@mdts/core'
 
 import markdownSyntax from './markdown-syntax.md.ts?link'
 import reference from './reference/api.md.ts?link'

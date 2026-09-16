@@ -7,6 +7,7 @@ Define Markdown in TypeScript to manage document dependencies, maintain document
 Choose the package that matches your goal:
 
 - [CLI execution example](packages/cli/README.md#usage): turn a `.md.ts` document into `dist/guide.md`, check it, and preview it.
+- [Programmatic core example](packages/core/README.md#usage): compile and lint documents from your own Node.js tools without running a CLI.
 - [Vite integration example](packages/vite/README.md#usage): compile document modules through a Vite server in your own tooling.
 
 ## Key features
@@ -17,15 +18,16 @@ Choose the package that matches your goal:
 
 ## Prerequisites
 
-See the [CLI prerequisites](packages/cli/README.md#prerequisites) or [plugin prerequisites](packages/vite/README.md#prerequisites).
+See the [CLI prerequisites](packages/cli/README.md#prerequisites), [core prerequisites](packages/core/README.md#prerequisites), or [plugin prerequisites](packages/vite/README.md#prerequisites).
 
 ## Setup
 
-See [CLI installation](packages/cli/README.md#setup) for normal document authoring, or [plugin installation](packages/vite/README.md#setup) for a custom Vite integration.
+See [CLI installation](packages/cli/README.md#setup) for normal document authoring,, [core installation](packages/core/README.md#setup) for programmatic use, or [plugin installation](packages/vite/README.md#setup) for a custom Vite integration.
 
 ## API
 
-The [CLI reference](packages/cli/README.md#api) covers commands, configuration, and authoring.
+The [CLI reference](packages/cli/README.md#api) covers commands and options.
+The [core reference](packages/core/README.md#api) covers configuration, document authoring, compilation, lint, and preview APIs.
 The [plugin reference](packages/vite/README.md#api) covers the lower-level integration.
 
 ## Development

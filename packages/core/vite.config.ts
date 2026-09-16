@@ -2,8 +2,15 @@ import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
   pack: {
-    entry: { cli: 'src/cli.ts' },
+    entry: {
+      config: 'src/config.ts',
+      comark: 'src/comark.ts',
+      build: 'src/build.ts',
+      lint: 'src/lint.ts',
+      preview: 'src/preview.ts',
+    },
     dts: true,
+    copy: [{ from: 'src/client.d.ts', to: 'dist' }],
     // Bundle the workspace-pinned platform code rather than resolving its broad prerelease range on installation.
     deps: {
       alwaysBundle: [/^@effect\/platform-node(?:-shared)?(?:\/|$)/],

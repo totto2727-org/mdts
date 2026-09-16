@@ -1,4 +1,4 @@
-import { defineNote, md, noteBody, noteRef } from '@mdts/cli'
+import { defineNote, md, noteBody, noteRef } from '@mdts/core'
 
 const notes = defineNote([
   {

@@ -6,12 +6,10 @@ import { createServer, mergeConfig, normalizePath } from 'vite-plus'
 import type { InlineConfig, ViteDevServer } from 'vite-plus'
 
 import { loadMdtsConfig } from './config.ts'
-import type { ResolvedMdtsConfig } from './config.ts'
+import type { MdtsProjectOptions, ResolvedMdtsConfig } from './config.ts'
 
-interface MdtsCommandOptions {
-  readonly configFile?: string
-  readonly root: string
-}
+export { MarkdownCompileError } from '@mdts/vite'
+export type { CompiledMarkdownDocument, MarkdownSourcePosition } from '@mdts/vite'
 
 export const resolveMdtsViteConfig = (config: ResolvedMdtsConfig, commandConfig: InlineConfig): InlineConfig => {
   const baseConfig: InlineConfig = {
@@ -61,7 +59,7 @@ export const compileResolvedMarkdownDocuments = async (
 }
 
 export const compileMarkdownDocuments = async (
-  options: MdtsCommandOptions,
+  options: MdtsProjectOptions,
 ): Promise<readonly CompiledMarkdownDocument[]> => {
   const config = await loadMdtsConfig({ command: 'build', ...options })
   return await compileResolvedMarkdownDocuments(config)
@@ -99,7 +97,7 @@ const writeMarkdownDocuments = (
     )
   })
 
-export const buildMarkdown = async (options: MdtsCommandOptions): Promise<void> => {
+export const buildMarkdown = async (options: MdtsProjectOptions): Promise<void> => {
   const config = await loadMdtsConfig({ command: 'build', ...options })
   const documents = await compileResolvedMarkdownDocuments(config)
   // oxlint-disable-next-line rules/no-effect-runtime-run -- Public Promise API executes one filesystem workflow with the Node service layer.

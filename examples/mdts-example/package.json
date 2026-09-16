@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@mdts/cli": "workspace:*"
+    "@mdts/cli": "workspace:*",
+    "@mdts/core": "workspace:*"
   }
 }
