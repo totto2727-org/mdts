@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
 import { NodeRuntime, NodeServices } from '@effect/platform-node'
+import { buildMarkdown } from '@mdts/core/build'
+import { createMarkdownPreview } from '@mdts/core/preview'
 import { Effect, Option, String } from 'effect'
 import { Command, Flag } from 'effect/unstable/cli'
 
-import { buildMarkdown } from './build.ts'
-import { createMarkdownPreview } from './preview.ts'
+import manifest from '../package.json' with { type: 'json' }
+import { formatLintResult } from './format.ts'
 
 const configFlag = Flag.file('config').pipe(
   Flag.withAlias('c'),
@@ -24,7 +26,7 @@ const buildCommand = Command.make('build', { config: configFlag }, ({ config }) 
 
 const lintCommand = Command.make('lint', { config: configFlag }, ({ config }) =>
   Effect.tryPromise(async () => {
-    const { formatLintResult, lintMarkdown } = await import('./lint.ts')
+    const { lintMarkdown } = await import('@mdts/core/lint')
     const result = await lintMarkdown(commandOptions(config))
     const output = formatLintResult(result)
     if (String.isNonEmpty(output)) {
@@ -54,7 +56,7 @@ const mdtsCommand = Command.make('mdts').pipe(
   Command.withSubcommands([buildCommand, lintCommand, previewCommand]),
 )
 
-const program = Command.run(mdtsCommand, { version: '0.0.0' }).pipe(Effect.provide(NodeServices.layer))
+const program = Command.run(mdtsCommand, { version: manifest.version }).pipe(Effect.provide(NodeServices.layer))
 
 // oxlint-disable-next-line rules/no-effect-runtime-run -- CLI entrypoint executes the top-level mdts workflow once.
 NodeRuntime.runMain(program)

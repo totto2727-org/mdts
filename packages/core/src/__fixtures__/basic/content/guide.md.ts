@@ -1,5 +1,5 @@
-import { defineMeta, md } from '@mdts/cli'
-import type { MarkdownLinkReference, MarkdownTemplate } from '@mdts/cli'
+import { defineMeta, md } from '@mdts/core'
+import type { MarkdownLinkReference, MarkdownTemplate } from '@mdts/core'
 
 import apiReference from './reference/api.md.ts?link'
 

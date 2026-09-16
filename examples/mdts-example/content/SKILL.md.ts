@@ -1,5 +1,5 @@
-import { md } from '@mdts/cli'
-import type { MarkdownMetadata } from '@mdts/cli'
+import { md } from '@mdts/core'
+import type { MarkdownMetadata } from '@mdts/core'
 
 export const meta = {
   frontmatter: {

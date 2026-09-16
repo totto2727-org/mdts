@@ -72,7 +72,7 @@ npm install --save-dev @mdts/vite vite@npm:@voidzero-dev/vite-plus-core@0.2.8
 - `MarkdownCompileError` reports invalid documents or unresolved links. `generatedFileNotice` contains the notice inserted into generated Markdown.
 - `@mdts/vite/client` declares typed `?link` imports. Add it to `compilerOptions.types` in your TypeScript configuration.
 
-The [authoring reference](../cli/README.md#markdown-authoring) documents the shared `defineMeta`, `defineNote`, `md`, `noteRef`, and `noteBody` helpers and associated types. Import them from `@mdts/vite` when using this package directly.
+The [authoring reference](../core/README.md#markdown-authoring) documents the shared `defineMeta`, `defineNote`, `md`, `noteRef`, and `noteBody` helpers and associated types. Import them from `@mdts/vite` when using this package directly.
 
 ## Development
 

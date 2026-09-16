@@ -139,10 +139,13 @@ export interface ResolvedMdtsConfig {
   readonly vite: UserConfig
 }
 
-interface LoadMdtsConfigOptions {
-  readonly command: ConfigEnv['command']
+export interface MdtsProjectOptions {
   readonly configFile?: string
   readonly root: string
+}
+
+export interface LoadMdtsConfigOptions extends MdtsProjectOptions {
+  readonly command: ConfigEnv['command']
 }
 
 export const defineConfig = (config: MdtsConfig): MdtsConfig => config
