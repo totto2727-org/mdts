@@ -6,8 +6,8 @@ Define Markdown in TypeScript to manage document dependencies, maintain document
 
 Choose the package that matches your goal:
 
-- [CLI execution example](packages/mdts/README.md#usage): turn a `.md.ts` document into `dist/guide.md`, check it, and preview it.
-- [Vite integration example](packages/vite-plugin-mdts/README.md#usage): compile document modules through a Vite server in your own tooling.
+- [CLI execution example](packages/cli/README.md#usage): turn a `.md.ts` document into `dist/guide.md`, check it, and preview it.
+- [Vite integration example](packages/vite/README.md#usage): compile document modules through a Vite server in your own tooling.
 
 ## Key features
 
@@ -17,16 +17,16 @@ Choose the package that matches your goal:
 
 ## Prerequisites
 
-See the [CLI prerequisites](packages/mdts/README.md#prerequisites) or [plugin prerequisites](packages/vite-plugin-mdts/README.md#prerequisites).
+See the [CLI prerequisites](packages/cli/README.md#prerequisites) or [plugin prerequisites](packages/vite/README.md#prerequisites).
 
 ## Setup
 
-See [CLI installation](packages/mdts/README.md#setup) for normal document authoring, or [plugin installation](packages/vite-plugin-mdts/README.md#setup) for a custom Vite integration.
+See [CLI installation](packages/cli/README.md#setup) for normal document authoring, or [plugin installation](packages/vite/README.md#setup) for a custom Vite integration.
 
 ## API
 
-The [CLI reference](packages/mdts/README.md#api) covers commands, configuration, and authoring.
-The [plugin reference](packages/vite-plugin-mdts/README.md#api) covers the lower-level integration.
+The [CLI reference](packages/cli/README.md#api) covers commands, configuration, and authoring.
+The [plugin reference](packages/vite/README.md#api) covers the lower-level integration.
 
 ## Development
 

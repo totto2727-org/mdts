@@ -2,10 +2,10 @@
 
 ## Repository structure
 
-- `packages/mdts/` contains the public Node and Effect CLI and its integration tests.
-- `packages/vite-plugin-mdts/` contains the authoring API and Vite plugin.
+- `packages/cli/` contains the public Node and Effect CLI and its integration tests.
+- `packages/vite/` contains the authoring API and Vite plugin.
 - `examples/mdts-example/` is a consumer that exercises public workspace packages only.
-- `packages/mdts/README.md` owns the CLI usage and authoring reference.
+- `packages/cli/README.md` owns the CLI usage and authoring reference.
 
 ## Development commands
 
@@ -53,7 +53,7 @@ Checks, fixes, tests, and example builds depend on `w:pack` so workspace consume
 The retained baseline is 24 tests across the CLI integration and plugin suites.
 Preserve all fixtures and assertions, including the example's rendered Comark integrations.
 When changing the CLI boundary, also run the actual `mdts` executable from the consumer directory and verify build output, preview HTTP routes, and lint exit status.
-The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures__/lint-knip/` configs exercise error, ignored, and warning-only outcomes without changing production configuration.
+The example deliberately triggers lint errors. The `packages/cli/src/__fixtures__/lint-knip/` configs exercise error, ignored, and warning-only outcomes without changing production configuration.
 
 ## Architecture
 
@@ -72,7 +72,7 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 
 ## Package-specific rules
 
-- Bundle the pinned Effect platform implementation in the CLI to avoid its transitive prerelease range resolving an incompatible runtime outside this workspace. Keep its license in `packages/mdts/THIRD_PARTY_NOTICES.md`.
+- Bundle the pinned Effect platform implementation in the CLI to avoid its transitive prerelease range resolving an incompatible runtime outside this workspace. Keep its license in `packages/cli/THIRD_PARTY_NOTICES.md`.
 - Keep Effect and its platform packages compatible with the pinned `4.0.0-beta.65` runtime. Do not inherit an unrelated framework's Effect upgrade.
 - Keep shared dependency versions in the workspace catalog and preserve the plugin's internal runtime dependencies.
 - Publish `@mdts/cli` and `@mdts/vite` with public access. Keep the workspace root and example private. Ship built JavaScript and declaration files, not executable TypeScript in node_modules. Licensing remains unspecified until an explicit owner decision.
@@ -94,6 +94,6 @@ The example deliberately triggers lint errors. The `packages/mdts/src/__fixtures
 
 ## Task-specific documentation
 
-- When changing user-visible configuration or behavior: [CLI and authoring guide](packages/mdts/README.md).
+- When changing user-visible configuration or behavior: [CLI and authoring guide](packages/cli/README.md).
 
 _This AGENTS.md was generated from the [share-artifact skill](https://raw.githubusercontent.com/totto2727-org/agent/refs/heads/main/plugins/totto2727-coding/skills/share-artifact/SKILL.md) and [AGENTS template](https://raw.githubusercontent.com/totto2727-org/agent/refs/heads/main/plugins/totto2727-coding/skills/share-artifact/agents/template.md)._

@@ -249,7 +249,7 @@ Invalid module exports, metadata, paths, or link targets fail compilation with `
 `generatedFileNotice` is the emitted instruction to edit the original `.md.ts` rather than generated Markdown.
 The ordinary `mdts build` command performs this integration and writes the output for consumers.
 
-For the complete exported configuration/type declarations, see [mdts configuration](src/config.ts), [plugin exports](../vite-plugin-mdts/src/index.ts), and [authoring types](../vite-plugin-mdts/src/runtime.ts).
+For the complete exported configuration/type declarations, see [mdts configuration](src/config.ts), [plugin exports](../vite/src/index.ts), and [authoring types](../vite/src/runtime.ts).
 
 ## Development
 

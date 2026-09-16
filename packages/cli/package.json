@@ -5,7 +5,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/totto2727-org/mdts.git",
-    "directory": "packages/mdts"
+    "directory": "packages/cli"
   },
   "bin": {
     "mdts": "./dist/cli.mjs"

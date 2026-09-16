@@ -5,7 +5,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/totto2727-org/mdts.git",
-    "directory": "packages/vite-plugin-mdts"
+    "directory": "packages/vite"
   },
   "files": [
     "dist"
