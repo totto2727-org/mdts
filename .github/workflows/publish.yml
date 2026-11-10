@@ -18,15 +18,15 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          persist-credentials: false
       - uses: totto2727-org/monorepo/.github/actions/setup-nix@main
+        with:
+          dev-shell: ci
       - uses: totto2727-org/monorepo/.github/actions/setup-typescript@main
         with:
           install-args: --frozen-lockfile
       - name: Build public packages
         run: |
-          eval "$(nix print-dev-env "$GITHUB_WORKSPACE#default")"
+          eval "$(nix print-dev-env "$GITHUB_WORKSPACE#ci")"
           vp run w:pack
       - name: Publish public packages
         uses: totto2727-org/monorepo/.github/actions/publish-npm@main

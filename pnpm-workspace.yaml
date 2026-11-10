@@ -1,19 +1,28 @@
 packages:
-  - app/*
   - packages/*
-  - tests/*
   - examples/*
 
 catalog:
-  '@types/node': 25.9.5
+  '@effect/platform-node': 4.0.0-beta.65
+  '@types/node': ^24.19.1
   effect: 4.0.0-beta.65
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.8
-  vite-plus: 0.2.8
+  typescript: ^7.0.2
+  vite: npm:@voidzero-dev/vite-plus-core@1.1.0
+  vite-plus: 1.1.0
+
+catalogs:
+  compiler:
+    typescript: 5.9.3
 
 overrides:
   '@effect/platform-node-shared': 4.0.0-beta.65
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.8
+  vite@*: npm:@voidzero-dev/vite-plus-core@1.1.0
+  vitest@*: 5.0.3
 
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+
+# Optional native acceleration is unnecessary. Vite+ supplies prebuilt tools.
 allowBuilds:
-  esbuild: true
-  msgpackr-extract: true
+  msgpackr-extract: false
+  vite-plus: false

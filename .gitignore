@@ -6,3 +6,11 @@ tmp/
 .env
 .env.*
 !.env.example
+.vite/
+.vite-plus/
+.DS_Store
+.direnv/
+result
+result-*
+*.tgz
+.vitest/

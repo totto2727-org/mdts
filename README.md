@@ -33,6 +33,7 @@ The [plugin reference](packages/vite/README.md#api) covers the lower-level integ
 ## Development
 
 See [AGENTS.md](AGENTS.md).
+See [template configuration differences](docs/template-configuration.md) for the shared tooling baseline and mdts-specific requirements.
 
 ## License
 

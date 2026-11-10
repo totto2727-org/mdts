@@ -30,7 +30,7 @@ vp install --frozen-lockfile
 ```
 
 The development shell supplies Node.js 24, Vite+, and nixfmt.
-Vite+ uses the `pnpm@12.3.4` package-manager pin in `package.json`.
+Vite+ uses the `pnpm@11.21.0` package-manager pin in `package.json`.
 For noninteractive automation, load the same environment rather than using `nix develop --command`:
 
 ```bash

@@ -5,8 +5,10 @@ export default {
   run: {
     tasks: {
       build: {
-        command: 'mdts build',
-        input: [{ auto: true }, '!dist/**'],
+        command: 'vp exec node node_modules/@mdts/cli/dist/cli.mjs build',
+        cache: {
+          input: [{ auto: true }, '!dist/**'],
+        },
       },
     },
   },
