@@ -61,7 +61,7 @@ This version uses the Vite+ core exposed through the `vite` package alias below.
 ## Setup
 
 ```bash
-npm install --save-dev @mdts/vite vite@npm:@voidzero-dev/vite-plus-core@0.2.8
+npm install --save-dev @mdts/vite vite@npm:@voidzero-dev/vite-plus-core@1.1.0
 ```
 
 ## API

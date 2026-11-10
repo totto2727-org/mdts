@@ -26,13 +26,13 @@
   "dependencies": {
     "confbox": "0.2.4",
     "effect": "catalog:",
-    "typescript": "5.9.3"
+    "typescript": "catalog:compiler"
   },
   "devDependencies": {
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "vite": "^0.2.8"
+    "vite": "^1.1.0"
   },
   "engines": {
     "node": ">=24"

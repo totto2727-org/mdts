@@ -28,13 +28,19 @@
             overlays = [ vite-plus-overlay.overlays.default ];
           };
         in
-        {
+        rec {
+          ci = default.overrideAttrs (_: {
+            shellHook = "";
+          });
           default = pkgs.mkShell {
             packages = [
-              pkgs.nodejs_24
-              pkgs.vite-plus
+              pkgs.nodejs_26
+              (pkgs.vite-plus.override { nodejs = pkgs.nodejs_26; })
               pkgs.nixfmt
             ];
+            shellHook = ''
+              vp config
+            '';
           };
         }
       );

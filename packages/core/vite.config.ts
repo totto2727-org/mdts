@@ -2,6 +2,7 @@ import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
   pack: {
+    clean: true,
     entry: {
       config: 'src/config.ts',
       comark: 'src/comark.ts',
@@ -20,5 +21,5 @@ export default defineConfig({
     platform: 'node',
     target: 'node24',
   },
-  run: { tasks: { pack: { command: 'vp pack', output: ['dist/**'] } } },
+  run: { tasks: { pack: { command: 'vp pack', cache: { input: [{ auto: true }, '!dist/**'], output: ['dist/**'] } } } },
 })
