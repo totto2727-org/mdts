@@ -34,8 +34,8 @@
           });
           default = pkgs.mkShell {
             packages = [
-              pkgs.nodejs_24
-              (pkgs.vite-plus.override { nodejs = pkgs.nodejs_24; })
+              pkgs.nodejs_26
+              (pkgs.vite-plus.override { nodejs = pkgs.nodejs_26; })
               pkgs.nixfmt
             ];
             shellHook = ''
