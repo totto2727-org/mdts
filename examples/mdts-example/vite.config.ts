@@ -12,7 +12,7 @@ export default {
   run: {
     tasks: {
       build: {
-        command: `vp exec node ${JSON.stringify(cliEntry)} build`,
+        command: `node ${JSON.stringify(cliEntry)} build`,
         cache: {
           input: [{ auto: true }, '!dist/**'],
           output: ['dist/**'],
