@@ -3,7 +3,7 @@
 The common configuration follows `vite-plus-app` at `70c95e4f874019368e88df0d7070eff3698665ac` and `vite-plus-lib` at `bfe72427c4507d17d76da37506476641f9669c9c`.
 These are configuration references, not mdts runtime upstreams.
 
-- Root development uses the app template's Node.js 26 baseline and `.node-version` pin of 26.7.0.
+- Root development uses the app template's Node.js 26 baseline.
   Published packages retain their Node.js 24 support and build target, matching the library template's public compatibility baseline.
 - TypeScript retains bundler resolution, ESNext modules, and DOM and Vite client types because document modules run through Vite.
   NodeNext resolution would change the authoring contract.
