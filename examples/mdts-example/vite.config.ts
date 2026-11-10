@@ -15,6 +15,7 @@ export default {
         command: `vp exec node ${JSON.stringify(cliEntry)} build`,
         cache: {
           input: [{ auto: true }, '!dist/**'],
+          output: ['dist/**'],
         },
       },
     },

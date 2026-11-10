@@ -22,8 +22,6 @@ jobs:
         with:
           dev-shell: ci
       - uses: totto2727-org/monorepo/.github/actions/setup-typescript@main
-        with:
-          install-args: --frozen-lockfile
       - name: Build public packages
         run: |
           eval "$(nix print-dev-env "$GITHUB_WORKSPACE#ci")"
